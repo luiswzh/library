@@ -1,3 +1,99 @@
-h1 {
-    color: red;
+body {
+    min-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    padding: 40px 15vw;
+    gap: 40px;
+    font-family: sans-serif;
+    background-color: #FFF78A;
+    color: #553a2c;
+}
+
+.header {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+}
+
+.library {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    width: 90%;
+    align-self: center;
+}
+
+.footer {}
+
+table {
+    width: 100%;
+}
+
+table .title {
+    width: calc(70%-225px);
+}
+
+table .author {
+    width: 30%;
+}
+
+table .pages {
+    width: 75px;
+}
+
+table .status {
+    width: 100px;
+}
+
+table .edit {
+    width: 50px;
+}
+
+.add-book {
+    align-self: center;
+    width: 100%;
+}
+
+.add-new {
+    background-color: transparent;
+    border: none;
+    font-size: 1.5rem;
+    border-radius: 10px;
+    padding: 10px;
+    min-width: 100%;
+    font-weight: 900;
+    color: #553a2c2c;
+    
+}
+
+button:hover {
+    background-color: rgb(255, 227, 130);
+    cursor: pointer;
+    color: #553a2c87;
+}
+
+th {
+    text-align: left;
+}
+
+.footer {
+    align-self: center;
+
+    a {
+        text-decoration: none;
+        color: #553a2c;
+    }
+}
+
+.signin {
+    height: fit-content;
+    padding: 10px 20px;
+    color:#553a2c;
+    background-color: transparent;
+    border: none;
+    border-radius: 5px;
+    font-weight: 800;
+}
+
+.signin:hover {
+    color:#553a2c;
 }
