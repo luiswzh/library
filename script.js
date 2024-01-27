@@ -3,7 +3,7 @@ const dialog = document.querySelector('dialog');
 const azSort = document.querySelector('.sort-az');
 const zaSort = document.querySelector('.sort-za');
 const sortCriteria = document.querySelector('#sort-criteria');
-const libraryTable = document.querySelector('table');
+const libraryTable = document.querySelector('tbody');
 const addBookButton = document.querySelector('.add-new');
 
 //Creates library object
@@ -54,6 +54,33 @@ function Book(title, author, pages, status) {
     this.author = author;
     this.pages = Number(pages);
     this.status = status;
+    
+    //Creates HTML row element
+    this.row = document.createElement('tr');
+    
+    this.tdTitle = document.createElement('td');
+    this.tdAuthor = document.createElement('td');
+    this.tdPages = document.createElement('td');
+    this.tdStatus = document.createElement('td');
+    
+    this.tdTitle.textContent = this.title;
+    this.tdAuthor.textContent = this.author;
+    this.tdPages.textContent = String(this.pages);
+    this.tdStatus.textContent = this.status;
+
+    this.row.appendChild(this.tdTitle);
+    this.row.appendChild(this.tdAuthor);
+    this.row.appendChild(this.tdPages);
+    this.row.appendChild(this.tdStatus);
+
+    //Adds edit button
+    this.tdEdit = document.createElement('td');
+    this.editButton = document.createElement('button');
+    this.editButton.classList.add('edit');
+    this.editButton.innerHTML = '<img src="./images/pencil.svg" alt="edit"></img>';
+    this.tdEdit.appendChild(this.editButton);
+    this.row.appendChild(this.tdEdit);  
+
 };
 
 //Sort order selection
