@@ -13,9 +13,18 @@ const library = {
     sortType: 'title',
 };
 //Method to add book to library
-library.addBook = function (book) {
+library.addBook = function(book) {
     this.books.push(book);
-}
+};
+
+//Method to delete book from library
+library.removeBook = function(book) {
+    const index = this.books.indexOf(book);
+    if (index > -1){
+        this.books.splice(index, 1);
+    }
+};
+
 //Creates book constructor
 function Book(title, author, pages, status) {
     this.title = title;
