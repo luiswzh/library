@@ -7,10 +7,21 @@ const libraryTable = document.querySelector('table');
 const addBookButton = document.querySelector('.add-new');
 
 //Creates library object
-let library = {
+const library = {
     books: [],
     sortOrder: 'az',
     sortType: 'title',
+};
+//Method to add book to library
+library.addBook = function (book) {
+    this.books.push(book);
+}
+//Creates book constructor
+function Book(title, author, pages, status) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.status = status;
 };
 
 //Sort order selection
