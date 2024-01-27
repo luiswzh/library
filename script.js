@@ -1,1 +1,3 @@
-console.log('Hello');
+dialog = document.querySelector('dialog');
+
+dialog.showModal();
