@@ -21,8 +21,9 @@ library.addBook = function(book) {
 library.removeBook = function(book) {
     const index = this.books.indexOf(book);
     if (index > -1){
-        this.books.splice(index, 1);
+        this.books.splice(index, 1); //removes from library
     }
+    delete book; //Destructs book object
 };
 
 //Method to sort books in library
@@ -46,6 +47,13 @@ library.sortBooks = function(order=this.sortOrder, parameter=this.sortType){
             return 0;
         })
     }
+};
+//Method to update DOM 
+library.updateDOM = function() {
+    libraryTable.innerHTML = '';
+    this.books.forEach(book => {
+        libraryTable.appendChild(book.row);
+    });
 };
 
 //Creates book constructor
