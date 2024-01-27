@@ -11,17 +11,24 @@
 
 <body>
     <div class="header">
-        <img src="" alt="logo">
+        <img src="./images/library-outline.svg" alt="logo" class="logo">
         <h1>library</h1>
         <button class="signin">sign in</button>
     </div>
     <div class="library">
         <div class="settings">
             <div class="sort">
-                sort:
                 <div class="sort-direction">
+                    <img src="./images/sort-alphabetical-ascending.svg" alt="sort ascending" class="sort-az active">
+                    <img src="./images/sort-alphabetical-descending.svg" alt="sort descending" class="sort-za">
                 </div>
                 <div class="sort-criteria">
+                    <select name="sort-criteria" id="sort-criteria">
+                        <option value="title">Title</option>
+                        <option value="author">Author</option>
+                        <option value="pages">Pages</option>
+                        <option value="status">Status</option>
+                    </select>
                 </div>
             </div>
         </div>
@@ -39,7 +46,7 @@
                     <td>JK Rowling</td>
                     <td>557</td>
                     <td>In Progress</td>
-                    <td>edit</td>
+                    <td><button class="edit"><img src="./images/pencil.svg" alt="edit"></button></td>
                 </tr>
             </table>
         </div>
@@ -50,8 +57,8 @@
         </div>
     </div>
     <div class="footer">
-        <a href="">
-            <img src="" alt="github logo">
+        <a href="https://github.com/luiswzh/library">
+            <img src="./images/github-mark.svg" alt="github logo">
             luiswzh 2024
         </a>
     </div>

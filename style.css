@@ -20,9 +20,8 @@ body {
     flex-grow: 1;
     width: 90%;
     align-self: center;
+    gap: 20px;
 }
-
-.footer {}
 
 table {
     width: 100%;
@@ -96,4 +95,42 @@ th {
 
 .signin:hover {
     color:#553a2c;
+}
+
+.settings, .sort, .sort-direction, .footer a {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+img {
+    width: 20px;
+    height: 20px;
+    align-self: center;
+    filter: invert(19%) sepia(49%) saturate(429%) hue-rotate(337deg) brightness(100%) contrast(89%);
+}
+
+.logo {
+    width: 50px;
+    height: 50px;
+}
+
+img.active {
+    background-color: rgb(255, 227, 130);
+    border-radius: 2px;
+}
+
+.sort-direction img:hover, select:hover {
+    cursor: pointer;
+}
+
+select {
+    background-color: transparent;
+    width: 75px;
+    border: none;
+}
+
+td button {
+    background-color: transparent;
+    border: none;
 }
