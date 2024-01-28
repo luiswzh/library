@@ -173,7 +173,6 @@ addBookButton.addEventListener('click', ()=>{
     currentObject = new Book('','','','');
     library.addBook(currentObject);
     currentObject.editButton.dispatchEvent(new Event('click'));
-    library.sortUpdate();
 });
 
 //OK button:
