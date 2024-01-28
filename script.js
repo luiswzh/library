@@ -37,24 +37,46 @@ library.removeBook = function(book) {
 
 //Method to sort books in library
 library.sortBooks = function(order=this.sortOrder, parameter=this.sortType){
-    if(order === 'az'){
-        this.books.sort((a,b)=>{
-            if(a[parameter]<b[parameter]){
-                return -1;
-            } else if (a[parameter]>b[parameter]){
-                return 1;
-            } else
-            return 0;
-        })
+    if(parameter === 'pages'){
+        if(order === 'az'){
+            this.books.sort((a,b)=>{
+                if(a[parameter]<b[parameter]){
+                    return -1;
+                } else if (a[parameter]>b[parameter]){
+                    return 1;
+                } else
+                return 0;
+            })
+        } else {
+            this.books.sort((a,b)=>{
+                if(a[parameter]<b[parameter]){
+                    return 1;
+                } else if (a[parameter]>b[parameter]){
+                    return -1;
+                } else
+                return 0;
+            })
+        }
     } else {
-        this.books.sort((a,b)=>{
-            if(a[parameter]<b[parameter]){
-                return 1;
-            } else if (a[parameter]>b[parameter]){
-                return -1;
-            } else
-            return 0;
-        })
+        if(order === 'az'){
+            this.books.sort((a,b)=>{
+                if(a[parameter].toLowerCase()<b[parameter].toLowerCase()){
+                    return -1;
+                } else if (a[parameter].toLowerCase()>b[parameter].toLowerCase()){
+                    return 1;
+                } else
+                return 0;
+            })
+        } else {
+            this.books.sort((a,b)=>{
+                if(a[parameter].toLowerCase()<b[parameter].toLowerCase()){
+                    return 1;
+                } else if (a[parameter].toLowerCase()>b[parameter].toLowerCase()){
+                    return -1;
+                } else
+                return 0;
+            })
+        }
     }
 };
 //Method to update DOM 
