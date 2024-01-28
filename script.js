@@ -65,6 +65,12 @@ library.updateDOM = function() {
     });
 };
 
+//Method to sort books an update DOM
+library.sortUpdate = function() {
+    library.sortBooks();
+    library.updateDOM();
+}
+
 //Creates book constructor
 function Book(title, author, pages, status) {
     this.title = title;
@@ -108,6 +114,14 @@ function Book(title, author, pages, status) {
         dialog.showModal();
     });
 
+    //Method to update row data
+    this.update = ()=>{
+        this.tdTitle.textContent = this.title;
+        this.tdAuthor.textContent = this.author;
+        this.tdPages.textContent = String(this.pages);
+        this.tdStatus.textContent = this.status;
+    };
+
 };
 
 //Sort order selection
@@ -116,17 +130,20 @@ azSort.addEventListener('click',()=>{
     azSort.classList.add('active');
     zaSort.classList.remove('active');
     library.sortOrder = 'az';
+    library.sortUpdate();
 });
 //ZA sort:
 zaSort.addEventListener('click',()=>{
     zaSort.classList.add('active');
     azSort.classList.remove('active');
     library.sortOrder = 'za';
+    library.sortUpdate();
 });
 
 //Sort type:
 sortCriteria.addEventListener('change',()=>{
     library.sortType = sortCriteria.value;
+    library.sortUpdate();
 });
 
 //Addin new book:
@@ -134,6 +151,7 @@ addBookButton.addEventListener('click', ()=>{
     currentObject = new Book('','','','');
     library.addBook(currentObject);
     currentObject.editButton.dispatchEvent(new Event('click'));
+    library.sortUpdate();
 });
 
 //OK button:
@@ -143,10 +161,13 @@ okButton.addEventListener('click', ()=>{
     currentObject.pages = Number(pagesInput.value);
     currentObject.status = statusInput.value;
     dialog.close();
+    currentObject.update();
+    library.sortUpdate();
 });
 
 //Delete button:
 deleteButton.addEventListener('click', ()=>{
     library.removeBook(currentObject);
     dialog.close();
+    library.sortUpdate();
 });
