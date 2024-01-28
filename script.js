@@ -6,6 +6,15 @@ const sortCriteria = document.querySelector('#sort-criteria');
 const libraryTable = document.querySelector('tbody');
 const addBookButton = document.querySelector('.add-new');
 
+//Elements inside modal
+const titleInput = document.querySelector('#title');
+const authorInput = document.querySelector('#author');
+const pagesInput = document.querySelector('#pages');
+const statusInput = document.querySelector('#status');
+const deleteButton = document.querySelector('#delete');
+const okButton = document.querySelector('#ok');
+let currentObject;
+
 //Creates library object
 const library = {
     books: [],
@@ -87,7 +96,17 @@ function Book(title, author, pages, status) {
     this.editButton.classList.add('edit');
     this.editButton.innerHTML = '<img src="./images/pencil.svg" alt="edit"></img>';
     this.tdEdit.appendChild(this.editButton);
-    this.row.appendChild(this.tdEdit);  
+    this.row.appendChild(this.tdEdit);
+
+    let self = this;
+    this.editButton.addEventListener('click',()=>{
+        titleInput.value = self.title;
+        authorInput.value = self.author;
+        pagesInput.value = self.pages;
+        statusInput.value = self.status;
+        currentObject = self;
+        dialog.showModal();
+    });
 
 };
 
@@ -108,4 +127,26 @@ zaSort.addEventListener('click',()=>{
 //Sort type:
 sortCriteria.addEventListener('change',()=>{
     library.sortType = sortCriteria.value;
+});
+
+//Addin new book:
+addBookButton.addEventListener('click', ()=>{
+    currentObject = new Book('','','','');
+    library.addBook(currentObject);
+    currentObject.editButton.dispatchEvent(new Event('click'));
+});
+
+//OK button:
+okButton.addEventListener('click', ()=>{
+    currentObject.title = titleInput.value;
+    currentObject.author = authorInput.value;
+    currentObject.pages = Number(pagesInput.value);
+    currentObject.status = statusInput.value;
+    dialog.close();
+});
+
+//Delete button:
+deleteButton.addEventListener('click', ()=>{
+    library.removeBook(currentObject);
+    dialog.close();
 });
