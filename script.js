@@ -1,3 +1,4 @@
+(function(){
 //Element Selectors
 const dialog = document.querySelector('dialog');
 const azSort = document.querySelector('.sort-az');
@@ -16,133 +17,145 @@ const okButton = document.querySelector('#ok');
 let currentObject;
 
 //Creates library object
-const library = {
-    books: [],
-    sortOrder: 'az',
-    sortType: 'title',
-};
-//Method to add book to library
-library.addBook = function(book) {
-    this.books.push(book);
-};
+const library = new (class {
+    books;
+    sortOrder;
+    sortType;
 
-//Method to delete book from library
-library.removeBook = function(book) {
-    const index = this.books.indexOf(book);
-    if (index > -1){
-        this.books.splice(index, 1); //removes from library
+    constructor(){
+        this.books = [];
+        this.sortOrder = 'az';
+        this.sortType = 'title';
     }
-    delete book; //Destructs book object
-};
+    //Method to add book to library
+    addBook = function(book) {
+        this.books.push(book);
+    }
 
-//Method to sort books in library
-library.sortBooks = function(order=this.sortOrder, parameter=this.sortType){
-    if(parameter === 'pages'){
-        if(order === 'az'){
-            this.books.sort((a,b)=>{
-                if(a[parameter]<b[parameter]){
-                    return -1;
-                } else if (a[parameter]>b[parameter]){
-                    return 1;
-                } else
-                return 0;
-            })
-        } else {
-            this.books.sort((a,b)=>{
-                if(a[parameter]<b[parameter]){
-                    return 1;
-                } else if (a[parameter]>b[parameter]){
-                    return -1;
-                } else
-                return 0;
-            })
-        }
-    } else {
-        if(order === 'az'){
-            this.books.sort((a,b)=>{
-                if(a[parameter].toLowerCase()<b[parameter].toLowerCase()){
-                    return -1;
-                } else if (a[parameter].toLowerCase()>b[parameter].toLowerCase()){
-                    return 1;
-                } else
-                return 0;
-            })
-        } else {
-            this.books.sort((a,b)=>{
-                if(a[parameter].toLowerCase()<b[parameter].toLowerCase()){
-                    return 1;
-                } else if (a[parameter].toLowerCase()>b[parameter].toLowerCase()){
-                    return -1;
-                } else
-                return 0;
-            })
+    //Method to delete book from library
+    removeBook = function(book) {
+        const index = this.books.indexOf(book);
+        if (index > -1){
+            this.books.splice(index, 1); //removes from library
         }
     }
-};
-//Method to update DOM 
-library.updateDOM = function() {
-    libraryTable.innerHTML = '';
-    this.books.forEach(book => {
-        libraryTable.appendChild(book.row);
-    });
-};
 
-//Method to sort books an update DOM
-library.sortUpdate = function() {
-    library.sortBooks();
-    library.updateDOM();
-}
+    //Method to sort books in library
+    sortBooks = function(order=this.sortOrder, parameter=this.sortType){
+        if(parameter === 'pages'){
+            if(order === 'az'){
+                this.books.sort((a,b)=>{
+                    if(a[parameter]<b[parameter]){
+                        return -1;
+                    } else if (a[parameter]>b[parameter]){
+                        return 1;
+                    } else
+                    return 0;
+                })
+            } else {
+                this.books.sort((a,b)=>{
+                    if(a[parameter]<b[parameter]){
+                        return 1;
+                    } else if (a[parameter]>b[parameter]){
+                        return -1;
+                    } else
+                    return 0;
+                })
+            }
+        } else {
+            if(order === 'az'){
+                this.books.sort((a,b)=>{
+                    if(a[parameter].toLowerCase()<b[parameter].toLowerCase()){
+                        return -1;
+                    } else if (a[parameter].toLowerCase()>b[parameter].toLowerCase()){
+                        return 1;
+                    } else
+                    return 0;
+                })
+            } else {
+                this.books.sort((a,b)=>{
+                    if(a[parameter].toLowerCase()<b[parameter].toLowerCase()){
+                        return 1;
+                    } else if (a[parameter].toLowerCase()>b[parameter].toLowerCase()){
+                        return -1;
+                    } else
+                    return 0;
+                })
+            }
+        }
+    }
+
+    //Method to update DOM 
+    updateDOM = function() {
+        libraryTable.innerHTML = '';
+        this.books.forEach(book => {
+            libraryTable.appendChild(book.row);
+        });
+    }
+
+    //Method to sort books an update DOM
+    sortUpdate = function() {
+        library.sortBooks();
+        library.updateDOM();
+    }
+    
+})();
+
 
 //Creates book constructor
-function Book(title, author, pages, status) {
-    this.title = title;
-    this.author = author;
-    this.pages = Number(pages);
-    this.status = status;
-    
-    //Creates HTML row element
-    this.row = document.createElement('tr');
-    
-    this.tdTitle = document.createElement('td');
-    this.tdAuthor = document.createElement('td');
-    this.tdPages = document.createElement('td');
-    this.tdStatus = document.createElement('td');
-    
-    this.tdTitle.textContent = this.title;
-    this.tdAuthor.textContent = this.author;
-    this.tdPages.textContent = String(this.pages);
-    this.tdStatus.textContent = this.status;
+class Book{
+    constructor(title, author, pages, status){
+        this.title = title;
+        this.author = author;
+        this.pages = Number(pages);
+        this.status = status;
 
-    this.row.appendChild(this.tdTitle);
-    this.row.appendChild(this.tdAuthor);
-    this.row.appendChild(this.tdPages);
-    this.row.appendChild(this.tdStatus);
-
-    //Adds edit button
-    this.tdEdit = document.createElement('td');
-    this.editButton = document.createElement('button');
-    this.editButton.classList.add('edit');
-    this.editButton.innerHTML = '<img src="./images/pencil.svg" alt="edit"></img>';
-    this.tdEdit.appendChild(this.editButton);
-    this.row.appendChild(this.tdEdit);
-
-    let self = this;
-    this.editButton.addEventListener('click',()=>{
-        titleInput.value = self.title;
-        authorInput.value = self.author;
-        pagesInput.value = self.pages;
-        statusInput.value = self.status;
-        currentObject = self;
-        dialog.showModal();
-    });
-
-    //Method to update row data
-    this.update = ()=>{
+        //Creates HTML row element
+        this.row = document.createElement('tr');
+        
+        this.tdTitle = document.createElement('td');
+        this.tdAuthor = document.createElement('td');
+        this.tdPages = document.createElement('td');
+        this.tdStatus = document.createElement('td');
+        
         this.tdTitle.textContent = this.title;
         this.tdAuthor.textContent = this.author;
         this.tdPages.textContent = String(this.pages);
         this.tdStatus.textContent = this.status;
-    };
+
+        this.row.appendChild(this.tdTitle);
+        this.row.appendChild(this.tdAuthor);
+        this.row.appendChild(this.tdPages);
+        this.row.appendChild(this.tdStatus);
+
+        //Adds edit button
+        this.tdEdit = document.createElement('td');
+        this.editButton = document.createElement('button');
+        this.editButton.classList.add('edit');
+        this.editButton.innerHTML = '<img src="./images/pencil.svg" alt="edit"></img>';
+        this.tdEdit.appendChild(this.editButton);
+        this.row.appendChild(this.tdEdit);
+
+        let self = this;
+        this.editButton.addEventListener('click',()=>{
+            titleInput.value = self.title;
+            authorInput.value = self.author;
+            pagesInput.value = self.pages;
+            statusInput.value = self.status;
+            currentObject = self;
+            dialog.showModal();
+        });
+    }
+    
+    
+
+    //Method to update row data
+    update = ()=>{
+        this.tdTitle.textContent = this.title;
+        this.tdAuthor.textContent = this.author;
+        this.tdPages.textContent = String(this.pages);
+        this.tdStatus.textContent = this.status;
+    }
 
 };
 
@@ -192,3 +205,5 @@ deleteButton.addEventListener('click', ()=>{
     dialog.close();
     library.sortUpdate();
 });
+
+})();
